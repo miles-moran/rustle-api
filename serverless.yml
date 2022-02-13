@@ -44,7 +44,6 @@ package:
 
 plugins:
   - serverless-rust
-
 functions:
   solve:
     # handler value syntax is `{cargo-package-name}.{bin-name}`

@@ -1,4 +1,4 @@
-use lambda_http::{handler, lambda, Context, IntoResponse, Request};
+use lambda_http::{handler, lambda, Context, IntoResponse, Request, Body};
 use serde_json::json;
 
 type Error = Box<dyn std::error::Error + Sync + Send + 'static>;
@@ -13,7 +13,12 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // `serde_json::Values` impl `IntoResponse` by default
     // creating an application/json response
     let body = request.body();
-    println!("{:?}", body);
+    if let Body::Text(text) = body {
+        println!("{}", text);
+    }
+
+    
+    
     Ok(json!({
         "message": "Go Serverless v1.0! Your function executed successfully!"
     }))
