@@ -14,7 +14,7 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // creating an application/json response
     let body = request.body();
     if let Body::Text(text) = body {
-        println!("{}", text);
+        println!("{:?}", text);
     }
 
     
