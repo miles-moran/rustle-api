@@ -234,15 +234,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "hello"
-version = "0.1.0"
-dependencies = [
- "lambda_http",
- "serde_json",
- "tokio",
-]
-
-[[package]]
 name = "hermit-abi"
 version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -750,6 +741,15 @@ dependencies = [
  "libc",
  "redox_syscall",
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "solve"
+version = "0.1.0"
+dependencies = [
+ "lambda_http",
+ "serde_json",
+ "tokio",
 ]
 
 [[package]]

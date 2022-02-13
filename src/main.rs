@@ -5,11 +5,11 @@ type Error = Box<dyn std::error::Error + Sync + Send + 'static>;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    lambda::run(handler(hello)).await?;
+    lambda::run(handler(solve)).await?;
     Ok(())
 }
 
-async fn hello(_: Request, _: Context) -> Result<impl IntoResponse, Error> {
+async fn solve(_: Request, _: Context) -> Result<impl IntoResponse, Error> {
     // `serde_json::Values` impl `IntoResponse` by default
     // creating an application/json response
     Ok(json!({
@@ -22,13 +22,13 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn hello_handles() {
+    async fn solve_handles() {
         let request = Request::default();
         let expected = json!({
             "message": "Go Serverless v1.0! Your function executed successfully!"
         })
         .into_response();
-        let response = hello(request, Context::default())
+        let response = solve(request, Context::default())
             .await
             .expect("expected Ok(_) value")
             .into_response();
