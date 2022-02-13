@@ -13,14 +13,7 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // `serde_json::Values` impl `IntoResponse` by default
     // creating an application/json response
     let body = request.body();
-    if let Body::Text(text) = body {
-    
-        let v = serde_json::from_str(text)?;
-        println!("{:?}", v);
-        println!("{:?}", text);
-    }
-
-    
+    println!("{:?}", body);
     
     Ok(json!({
         "message": "Go Serverless v1.0! Your function executed successfully!"
