@@ -14,6 +14,9 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // creating an application/json response
     let body = request.body();
     if let Body::Text(text) = body {
+    
+        let v = serde_json::from_str(text)?;
+        println!("{:?}", v);
         println!("{:?}", text);
     }
 
