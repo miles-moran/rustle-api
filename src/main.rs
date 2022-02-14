@@ -35,7 +35,7 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     
     Ok(json!({
         "message": "Go Serverless v1.0! Your function executed successfully!",
-        "attempts": json!(results)
+        "attempts": results
     }))
 }
 
