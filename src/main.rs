@@ -25,8 +25,8 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     if let Body::Text(text) = body {
         let parsed: Req = serde_json::from_str(text)?;
         println!("{:?}", parsed.solution);
-        let solutions = ["poker".to_string(), "joker".to_string(), "loner".to_string()].to_vec();
-        let guesses = ["poker".to_string(), "joker".to_string(), "loner".to_string()].to_vec();
+        let solutions = reader::get_words(include_str!("./assets/solution-lexicon.json"));
+        let guesses = reader::get_words(include_str!("./assets/guess-lexicon.json"));
         let solution:&str = &parsed.solution[..];
         results = solver::solve(solution, solutions.clone(), guesses.clone());
         for r in results {
