@@ -21,7 +21,7 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // `serde_json::Values` impl `IntoResponse` by default
     // creating an application/json response
     let body = request.body();
-    let mut results;
+    let results;
     if let Body::Text(text) = body {
         let parsed: Req = serde_json::from_str(text)?;
         println!("{:?}", parsed.solution);
