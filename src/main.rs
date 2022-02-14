@@ -28,8 +28,9 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     if let Body::Text(text) = body {
         let parsed: Req = serde_json::from_str(text)?;
         println!("{:?}", parsed.solution);
-        let solutions = reader::get_words(SOLUTION_FILE);
-        let guesses = reader::get_words(GUESS_FILE);
+        let solutions = reader::get_words(&SOLUTION_FILE);
+        println!("{}", solutions.len());
+        let guesses = reader::get_words(&GUESS_FILE);
         let solution:&str = &parsed.solution[..];
         results = solver::solve(solution, solutions.clone(), guesses.clone());
         for r in results {
