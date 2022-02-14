@@ -117,7 +117,8 @@ pub fn get_suggestions(solutions:Vec<String>, guesses:Vec<String>) -> Vec<Sugges
 }
 
 fn generate_color_permutations() -> HashMap<[u8; 5], u16> {
-    let combinations = [GREEN, YELLOW, GRAY]
+    let redeclared = [GREEN, YELLOW, GRAY];
+    let combinations = redeclared
         .into_iter()
         .combinations_with_replacement(5)
         .collect_vec();
@@ -131,11 +132,11 @@ fn generate_color_permutations() -> HashMap<[u8; 5], u16> {
         for permutation in ps {
             let perm = 0;
             let feedback = [
-                permutation[0],
-                permutation[1],
-                permutation[2],
-                permutation[3],
-                permutation[4],
+                permutation[0].clone(),
+                permutation[1].clone(),
+                permutation[2].clone(),
+                permutation[3].clone(),
+                permutation[4].clone(),
             ];
             permutations.insert(feedback, perm);
         }
