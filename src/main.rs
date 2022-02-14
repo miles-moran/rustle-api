@@ -1,5 +1,13 @@
 use lambda_http::{handler, lambda, Context, IntoResponse, Request, Body};
-use serde_json::json;
+use serde_json::{Value, json};
+use serde::{Deserialize, Serialize};
+mod solver;
+mod reader;
+
+#[derive(Serialize, Deserialize)]
+struct Req {
+    solution: String
+}
 
 type Error = Box<dyn std::error::Error + Sync + Send + 'static>;
 
@@ -13,12 +21,18 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // `serde_json::Values` impl `IntoResponse` by default
     // creating an application/json response
     let body = request.body();
-    let mut var = "a";
+    let mut results;
     if let Body::Text(text) = body {
-        println!("{}", var);
-        var = text
+        let parsed: Req = serde_json::from_str(text)?;
+        println!("{:?}", parsed.solution);
+        let solutions = reader::get_words("./src/assets/solution-lexicon.json");
+        let guesses = reader::get_words("./src/assets/guess-lexicon.json");
+        let solution:&str = &parsed.solution[..];
+        results = solver::solve(solution, solutions.clone(), guesses.clone());
+        for r in results {
+            println!("{:?}", r.word);
+        }
     }
-    println!("value is {}", var);
     
     Ok(json!({
         "message": "Go Serverless v1.0! Your function executed successfully!"
