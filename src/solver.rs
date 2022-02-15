@@ -92,12 +92,12 @@ pub fn get_suggestions(solutions:Vec<String>, guesses:Vec<String>) -> Vec<Sugges
     let colors = generate_color_permutations();
     let mut suggestions = vec![];
 
-    for s in 0..chars_possible.len() - 1 {
-        let possible = chars_possible.iter().nth(s).unwrap();
+    for s in 0..chars_all.len() - 1 {
+        let guess = chars_all.iter().nth(s).unwrap();
         let mut permutations = colors.clone();
 
-        for guess in chars_all.clone() {
-            let feedback = get_feedback(possible.clone(), guess);
+        for possible in chars_possible.clone() {
+            let feedback = get_feedback(possible.clone(), guess.to_vec());
             permutations.insert(
                 feedback.clone(),
                 permutations.get_key_value(&feedback).unwrap().1 + 1,
@@ -111,8 +111,10 @@ pub fn get_suggestions(solutions:Vec<String>, guesses:Vec<String>) -> Vec<Sugges
                 score += c;
             }
         }
+        let word = all[s].to_string();
+
         let suggestion = Suggestion {
-            word: solutions[s].to_string(),
+            word: word,
             score: score,
         };
         suggestions.push(suggestion);

@@ -50,6 +50,7 @@ functions:
     # or `{cargo-package-name}` for short when you are building a
     # default bin for a given package.
     handler: solve
+    timeout: 30
     events:
       - http:
           path: '/'
