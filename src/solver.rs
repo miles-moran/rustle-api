@@ -31,7 +31,9 @@ pub struct Attempts {
 pub fn solve(solution: &str, solutions:Vec<String>, guesses:Vec<String>) -> Attempts{
     let mut possibles = solutions.clone();
     let mut answer:String = "".to_string();
-    let mut attempts: Attempts = vec![];
+    let mut attempts: Attempts = Attempts {
+        attempts: vec![]
+    };
     let mut turn = 0;
     while answer.is_empty(){
         let mut guess = "".to_string();
