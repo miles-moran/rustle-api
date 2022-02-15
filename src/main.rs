@@ -32,10 +32,13 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
         let solution:&str = &parsed.solution[..];
         results = solver::solve(solution, solutions.clone(), guesses.clone());
     }
+
+    let attempts = json!(results);
+    let a = serde_json::to_string(&attempts)?;
     
     Ok(json!({
         "message": "Go Serverless v1.0! Your function executed successfully!",
-        "attempts": results
+        "attempts": a
     }))
 }
 
