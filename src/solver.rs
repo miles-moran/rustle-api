@@ -7,7 +7,7 @@ static GREEN: u8 = 1;
 static YELLOW: u8 = 2;
 static GRAY: u8 = 3;
 
-static FIRST_GUESS: &str = "saner";
+static FIRST_GUESS: &str = "soare";
 
 #[derive(Debug)]
 #[derive(Clone)]

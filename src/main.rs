@@ -36,6 +36,7 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
         let solutions = reader::get_words(&SOLUTION_FILE);
         let guesses = reader::get_words(&GUESS_FILE);
         let solution:&str = &parsed.solution[..];
+        println!("Solution: {}", solution);
         results = solver::solve(solution, solutions.clone(), guesses.clone());
     }
 
