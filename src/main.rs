@@ -26,7 +26,10 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // creating an application/json response
     let body = request.body();
     let mut results = Attempts {
-        attempts: vec![]
+        attempts: vec![Attempt {
+            word: "a".to_string(),
+            feedback: [0, 0, 0, 0, 0]
+        }]
     };
     if let Body::Text(text) = body {
         let parsed: Req = serde_json::from_str(text)?;
