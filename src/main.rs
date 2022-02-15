@@ -1,6 +1,7 @@
 use lambda_http::{handler, lambda, Context, IntoResponse, Request, Body};
 use serde_json::{Value, json};
 use serde::{Deserialize, Serialize};
+use solver::{Attempt, Attempts};
 mod solver;
 mod reader;
 
@@ -24,7 +25,9 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
     // `serde_json::Values` impl `IntoResponse` by default
     // creating an application/json response
     let body = request.body();
-    let results;
+    let mut results = Attempts {
+        attempts: vec![]
+    };
     if let Body::Text(text) = body {
         let parsed: Req = serde_json::from_str(text)?;
         let solutions = reader::get_words(&SOLUTION_FILE);
@@ -33,12 +36,11 @@ async fn solve(request: Request, _: Context) -> Result<impl IntoResponse, Error>
         results = solver::solve(solution, solutions.clone(), guesses.clone());
     }
 
-    let attempts = json!(results);
-    let a = serde_json::to_string(&attempts)?;
+    let attempts = serde_json::to_string(&results)?;
     
     Ok(json!({
         "message": "Go Serverless v1.0! Your function executed successfully!",
-        "attempts": a
+        "attempts": attempts
     }))
 }
 

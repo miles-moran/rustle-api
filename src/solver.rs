@@ -1,6 +1,7 @@
 use itertools::Itertools;
 use std::collections::HashMap;
 use std::time::Instant;
+use serde::{Deserialize, Serialize};
 
 static GREEN: u8 = 1;
 static YELLOW: u8 = 2;
@@ -15,15 +16,22 @@ pub struct Suggestion {
     pub score: f32,
 }
  
+#[derive(Serialize, Deserialize)]
 pub struct Attempt {
     pub word: String,
     pub feedback: [u8; 5],
 }
 
-pub fn solve(solution: &str, solutions:Vec<String>, guesses:Vec<String>) -> Vec<Attempt>{
+#[derive(Serialize, Deserialize)]
+pub struct Attempts {
+    pub attempts: Vec<Attempt>
+}
+
+
+pub fn solve(solution: &str, solutions:Vec<String>, guesses:Vec<String>) -> Attempts{
     let mut possibles = solutions.clone();
     let mut answer:String = "".to_string();
-    let mut attempts = vec![];
+    let mut attempts: Attempts = vec![];
     let mut turn = 0;
     while answer.is_empty(){
         let mut guess = "".to_string();
@@ -51,7 +59,7 @@ pub fn solve(solution: &str, solutions:Vec<String>, guesses:Vec<String>) -> Vec<
             feedback: feedback
         };
 
-        attempts.push(attempt);
+        attempts.attempts.push(attempt);
 
         if solution == guess.to_string() {
             answer = guess;
